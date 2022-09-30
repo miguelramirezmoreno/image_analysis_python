@@ -38,6 +38,11 @@ print(im.meta.keys())
 ```
 import matplotlib.pyplot as plt
 plt.imshow(im, cmap = 'gray')
-plt.axis('off')
 plt.show()
+
+####imshow() further allows to modify the plotted image. Not the underlying data!
+plt.imshow(im, cmap = 'gray',vmin= -200, vmax= 200)
+plt.axis('off')
 ```
+
+## N-dimensional images
