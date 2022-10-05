@@ -83,4 +83,41 @@ red= image[:,:,0]
 plt.hist(red.ravel(), bins= 256)
 plt.title('Red Histogramn')
 plt.show()
+```
 
+# Thresholding
+
+```
+thres= 127
+
+binary = image > thresh
+
+show_image(image, 'original')
+show_image(binary, 'thresholded')
+
+inverted_binary = image <= thresh
+show_image(image, 'original')
+show_image(inverted_binary, inverted 'thresholded')
+```
+
+There are many ways of thresholding. Two big categories are global or histagram based, and local or adaptative (good for uneven illumination, but slower).
+```
+from skimage.filters import try_all_threshold
+fig, ax = try_all_threshold(image, verbose=False)
+show_plot(fig, ax)
+```
+How to calculate optimal threshold values:
+```
+# optimal global threshold
+from skimage.filters import threshold_otsu
+thresh = threshold_otsu(image)
+binary_global = image > thresh
+# optimal local threshold
+
+```
+from skimage.filters import threshold_local
+block_size = 35
+##this is local neighborhood
+local_thresh = threshold_local(text_image, block_size, offset=10)
+binary_local = text_image > local_thresh
+```
