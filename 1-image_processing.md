@@ -16,6 +16,10 @@ rocket_image = data.rocket()
 from skimage import color
 grayscale = color.rgb2gray(rocket)
 rgb= color.gray2rgb(grayscale)
+
+#alternative:
+
+from skimage.color import rgb2gray
 ```
 Representing images with matplotlib:
 ```
