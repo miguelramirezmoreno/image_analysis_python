@@ -1,5 +1,5 @@
 
-#Processing with sci-kit
+# Processing with sci-kit
 
 RGB images have 3 channels, grayscale only 1
 
