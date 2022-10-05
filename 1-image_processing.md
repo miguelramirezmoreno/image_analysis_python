@@ -112,9 +112,10 @@ How to calculate optimal threshold values:
 from skimage.filters import threshold_otsu
 thresh = threshold_otsu(image)
 binary_global = image > thresh
+
 # optimal local threshold
 
-```
+
 from skimage.filters import threshold_local
 block_size = 35
 ##this is local neighborhood
