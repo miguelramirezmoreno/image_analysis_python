@@ -126,3 +126,51 @@ block_size = 35
 local_thresh = threshold_local(text_image, block_size, offset=10)
 binary_local = text_image > local_thresh
 ```
+
+# Filtering
+ - Enhancing an image
+ - Smoothening
+ - Empathize/remove features
+ - Sharpening
+ - Edge detection (e.g. Sobel method)
+ It is a neighborhood operation
+ 
+ Edge detection with Sobel method:
+ ```
+ from skimage.filters import sobel
+ ##sobel requires a grayscale image
+ edge_sobel= sobel(image_coin)
+ 
+ def plot_comparison(original, filterd, title_filtered):
+   fig, (Ax1, ax2) = plt.subplots(ncols=2, figsize=(8,6), sharex=True, 
+                                  sharey=True)
+   ax1.imshow(original, cmap=plt.cm.gray)
+   ax1.set_title('original')
+   ax2.imshow(filtered, cmap=plt.cm.gray)
+   ax2.set_title(title_filtered)
+   ax2.axis('off')
+   
+
+ plot_comparison(image_coin, edge_sobel, "Edge with Sobel")
+ 
+ ```
+ Gaussian smoothing
+ ```
+ from skimage.filters import gaussian
+ gaussian_image = (gaussian, original_pic, multichannel =True)
+ plot_comparison(original_pic, gaussian_image, "Blurred witht Gaussian filter")
+  ```
+  
+Contrast enhancement (histogram equalization)
+Spreads out most common values
+
+ ```
+ from skimage import exposure
+ 
+ ##histogram equalization
+ image_eq = exposure.equalize_hist(image)
+ show_image(image, 'Original')
+ show_image(image_eq, 'Histogram equalized')
+ 
+ ##adaptive equalization (contrastive limited adaptive histogram equalization, CLAHE)
+ image_adapteq = exposure.equalize_adapthist(image, clip_limit=0.03)
