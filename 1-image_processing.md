@@ -194,3 +194,6 @@ xray_image_eq =  exposure.equalize_hist(chest_xray_image)
 # Show the resulting image
 show_image(xray_image_eq, 'Resulting image')
  ```
+Increase impact and contrast of an image:
+ ```
+ 
