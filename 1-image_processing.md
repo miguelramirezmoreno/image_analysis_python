@@ -248,3 +248,89 @@ image_resized = resize(image, (height, width), anti_aliasing= True)
 height= image.shape[0]/4
 width = image.shape[1]/4
  ```
+ Exercise:
+ ```
+ # Import the module and the rotate and rescale functions
+from skimage.transform import rotate, rescale
+
+# Rotate the image 90 degrees clockwise 
+rotated_cat_image = rotate(image_cat, -90)
+
+# Rescale with anti aliasing
+rescaled_with_aa = rescale(rotated_cat_image, 1/4, anti_aliasing=True, multichannel=True)
+
+# Rescale without anti aliasing
+rescaled_without_aa = rescale(rotated_cat_image, 1/4, anti_aliasing=False, multichannel=True)
+
+# Show the resulting images
+show_image(rescaled_with_aa, "Transformed with anti aliasing")
+show_image(rescaled_without_aa, "Transformed without anti aliasing")
+
+
+# Import the module and function to enlarge images
+from skimage.transform import rescale
+
+# Import the data module
+from skimage import data
+
+# Load the image from data
+rocket_image = data.rocket()
+
+# Enlarge the image so it is 3 times bigger
+enlarged_rocket_image = rescale(rocket_image, 3, anti_aliasing=True, multichannel=True)
+
+# Show original and resulting image
+show_image(rocket_image)
+show_image(enlarged_rocket_image, "3 times enlarged image")
+
+
+# Import the module and function
+from skimage.transform import resize
+
+# Set proportional height so its half its size
+height = int(dogs_banner.shape[0] / 2)
+width = int(dogs_banner.shape[1] / 2)
+
+# Resize using the calculated proportional height and width
+image_resized = resize(dogs_banner, (height, width), anti_aliasing=True)
+
+# Show the original and resized image
+show_image(dogs_banner, 'Original')
+show_image(image_resized, 'Resized image')
+```
+
+# Morphology
+ - Filtering removes imperfections in the binary image but some also on grayscale images
+ - Dilation and erosion are the most used.
+ - The number pixels added or removed depends on the structuring element, a small image used to probe the input (in/fit, intersect/hit, or out of the object. The structuring element can have a square, diamond, cross... shape, depending.
+
+Creating the shape (filled with 1s):
+
+ ```
+ from skimage import morphology
+ square = morphology.square(4)
+ rectangle = morphology.rectangle(4,2)
+ ```
+ 
+Applying Erosion
+
+ ```
+ from skimage import moprhology
+ selem=rectangle(12,6)
+ eroded_image=morphology.binary_erosion(image_horse, selem=selem)
+ plot_comparison(image_horse, eroded_image, 'Erosion')
+ ##By default, erosion uses a cross shape unless selem is specified. It can be better or worse depending on the shape and the image.
+ ```
+ Dilation:
+
+ ```
+ from skimage import morphology
+ dilated_image = morphology.binary_dilation(image_horse)
+ plot_comparison(image_horse, dilated_image, 'Dilation')
+ ```
+ 
+   Title:
+
+ ```
+ 
+ ```
