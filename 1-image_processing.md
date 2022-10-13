@@ -212,3 +212,39 @@ Increase impact and contrast of an image:
  show_image(original_image)
  show_image(adapthist_eq_image, '#ImageprocessingDatacamp')
 ```
+
+
+# Transformations
+ - Preparing images for classification ML models
+ - Optimization/compression
+ - Save images with same proportions
+
+Rotating
+ ```
+from skimage.transform import rotate
+image_rotated = rotate(image, -90)
+show_image(image, 'original')
+show_image(image_rotated, 'rotated 90 degrees anticlockwise')
+##NOTE: negative values means clockwise, use positive numbers to turn left
+ ```
+ 
+ Rescaling
+ ```
+##Downgrading:
+from skimage.transform import rescale
+image_rescaled = rescale(image, 1/4, anti-aliasing= True, multichannel=True)
+ ```
+ 
+ Resizing is similar tu rescaling, but allows to specify dimensions
+ 
+```
+
+from skimage.transform import resize
+##We need to give values
+height = 400
+width = 500
+image_resized = resize(image, (height, width), anti_aliasing= True)
+##this method can change the scale ratio, unless we resize proportionally:
+height= image.shape[0]/4
+width = image.shape[1]/4
+ ```
