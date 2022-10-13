@@ -1,5 +1,5 @@
-
-# Processing with sci-kit
+# 1. Introducting
+## Processing with sci-kit
 
 RGB images have 3 channels, grayscale only 1. Number of channels appears with sci-kit as the third dimension
 
@@ -30,7 +30,7 @@ plt.axis('off')
 plt.show()
 ```
 
-# Numpy with images
+## Numpy with images
 ```
 madrid_image= plt.imread('/madrid.jpeg')
 type(madrid_image)
@@ -77,7 +77,7 @@ show_image(horizontally_flipped, 'horizontally flipped image')
 
 ```
 
-# Create histograms
+## Create histograms
 
 Base for analysis, threshold, brightness/contrast and equalize.
 
@@ -89,7 +89,7 @@ plt.title('Red Histogramn')
 plt.show()
 ```
 
-# Thresholding
+## Thresholding basics
 
 ```
 thres= 127
@@ -127,7 +127,7 @@ local_thresh = threshold_local(text_image, block_size, offset=10)
 binary_local = text_image > local_thresh
 ```
 
-# Filtering
+# 2. Filtering, contrast, transformation and morphology
  - Enhancing an image
  - Smoothening
  - Empathize/remove features
@@ -214,7 +214,7 @@ Increase impact and contrast of an image:
 ```
 
 
-# Transformations
+## Transformations
  - Preparing images for classification ML models
  - Optimization/compression
  - Save images with same proportions
@@ -299,7 +299,7 @@ show_image(dogs_banner, 'Original')
 show_image(image_resized, 'Resized image')
 ```
 
-# Morphology
+## Morphology
  - Filtering removes imperfections in the binary image but some also on grayscale images
  - Dilation and erosion are the most used.
  - The number pixels added or removed depends on the structuring element, a small image used to probe the input (in/fit, intersect/hit, or out of the object. The structuring element can have a square, diamond, cross... shape, depending.
@@ -352,7 +352,64 @@ dilated_image = morphology.binary_dilation(world_image)
 show_image(world_image, 'Original')
 show_image(dilated_image, 'Dilated image')
  ```
-# Title
+# 3. Image Restoration and reconstruction
+
+ - Fixing damaged images. Reconstructing lost parts is called inpainting, by looking at the non-damaged regions. The damaged pixels are set as a mask
+ - Text removal
+ - Logo removal
+ - Object removal
+
+```
+from skimage.restoration import inpaint
+mask = get_mask(defect_image)
+restored_image=inpaint.inpaint_biharmonic(defect_image, mask, multichannel = True)
+```
+
+We use the function get_mask to define what is information and what is empty (black), for example:
+```
+# Initialize the mask
+mask = np.zeros(image_with_logo.shape[:-1])
+
+# Set the pixels where the logo is to 1
+mask[210:290, 360:425] = 1
+
+# Apply inpainting to remove the logo
+image_logo_removed = inpaint.inpaint_biharmonic(image_with_logo,mask,multichannel=True)
+
+# Show the original and logo removed images
+show_image(image_with_logo, 'Image with logo')
+show_image(image_logo_removed, 'Image with logo removed')
+```
+## Noise and noise removal
+ - Departures from the ideal signal, errors in image acquisition
+
+We can apply noise:
+```
+# Import the module and function
+from skimage.util import random_noise
+
+# Add noise to the image
+noisy_image = random_noise(fruit_image)
+
+# Show original and resulting image
+show_image(fruit_image, 'Original')
+show_image(noisy_image, 'Noisy image')
+```
+
+And of course, most of the times, remove it using tools like total variation (TV, cartoon-like images), bilateral, wavelet or non-local
+```
+from skimage.restoration import denoise_tv_chambolle
+denoised_image = denoise_tv_chambolle(noisy_image, weight=0.1, multichannel= True)
+##The greater the weight, the more denoiser but also smoother image
+```
+
+```
+from skimage.restoration import denoise_bilateral
+denoised_image = denoise_bilateral(noisy_image, multichannel= True)
+##Less smooth than TV, preserves the edges better
+```
+
+## Image Restoration and reconstruction
  - Preparing images for classification ML models
  - Optimization/compression
  - Save images with same proportions
