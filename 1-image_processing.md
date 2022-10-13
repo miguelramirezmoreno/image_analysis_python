@@ -175,7 +175,7 @@ Spreads out most common values
  ##adaptive equalization (contrastive limited adaptive histogram equalization, CLAHE)
  image_adapteq = exposure.equalize_adapthist(image, clip_limit=0.03)
  ```
- 
+ Medical images:
   ```
  
  # Import the required module
@@ -194,6 +194,21 @@ xray_image_eq =  exposure.equalize_hist(chest_xray_image)
 # Show the resulting image
 show_image(xray_image_eq, 'Resulting image')
  ```
+Improve the quality of an aerial image:
+```
+from skimage import exposure
+image_eq= exposure.equalize_hist(image_aerial)
+show_image(image_aerial, 'Original')
+show_image(image_eq, 'Resulting image')
+
+```
 Increase impact and contrast of an image:
  ```
+ from skimage import data, exposure
  
+ original_image = data.coffee()
+ adapthist_eq_image = exposure.equalize_adapthist(original_image, clip_limit=0.03)
+ 
+ show_image(original_image)
+ show_image(adapthist_eq_image, '#ImageprocessingDatacamp')
+```
