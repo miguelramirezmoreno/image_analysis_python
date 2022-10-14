@@ -1,3 +1,7 @@
+# Choose directory
+https://stackoverflow.com/questions/50860640/ask-a-user-to-select-folder-to-read-the-files-in-python
+
+
 # Image mirroring
 ```
 from PIL import image
