@@ -409,6 +409,21 @@ denoised_image = denoise_bilateral(noisy_image, multichannel= True)
 ##Less smooth than TV, preserves the edges better
 ```
 
+## Superpixels and segmentation
+ - Partition into segments to analyse
+ - The most basic system is thresholding, but there is more methods.
+ - Detection and isolation of elements of interest. AA superpixel is a group of pixels with similar/identical gray levels.
+ - Superpixels allow to get meanignful regions, computational efficiency.
+ - Segmentation can be supervised (e.g., we specify threshold level, as we saw earlier) or unsupervised.
+ - Simple linear iterative clusteric, SLIC, is unsupervised and based on superpixels
+
+```
+from skimage.segmentation import slic
+from skimage.color import label2rgb
+segments= slic(image)
+segmented_image = label2rgb(segments, image, kind='avg')
+```
+
 ## Image Restoration and reconstruction
  - Preparing images for classification ML models
  - Optimization/compression
