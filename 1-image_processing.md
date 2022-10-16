@@ -420,13 +420,53 @@ denoised_image = denoise_bilateral(noisy_image, multichannel= True)
 ```
 from skimage.segmentation import slic
 from skimage.color import label2rgb
-segments= slic(image)
+segments= slic(image, n_segments= 300)
+##the number of segments is optional)
 segmented_image = label2rgb(segments, image, kind='avg')
 ```
 
+## Finding contours
+ - Measure size
+ - Count number of objets
+ - Clasify shapes
+ - Requires binary images (thresholded with black background)
+```
+from skimage import measure
+image= color.rgb2gray(image)
+thresh = threshold_otsu(image)
+thresholded_image = image > thresh
+
+contours =measure.find_contours(thresholded_image, 0.8)
+#level value between 0 and 1, the closer to 1 the more sensitive (less contours found)
+show_image_contour(image, contours)
+for contour in contours:
+    print(contour.shape)
+#This prints a (n, 2) -ndarray, with n representing the number of points making the contour
+```
+<img width="713" alt="image" src="https://user-images.githubusercontent.com/43887905/196050768-52bcc6f0-452d-46ab-9b1c-7f0724a44685.png">
+
+```
+To count the number of dots in an image of dices:
+
+# Create list with the shape of each contour
+shape_contours = [cnt.shape[0] for cnt in contours]
+
+# Set 50 as the maximum size of the dots shape
+max_dots_shape = 50
+
+# Count dots in contours excluding bigger than dots size
+dots_contours = [cnt for cnt in contours if np.shape(cnt)[0] < max_dots_shape]
+
+# Shows all contours found 
+show_image_contour(binary, contours)
+```
+
 ## Image Restoration and reconstruction
- - Preparing images for classification ML models
- - Optimization/compression
- - Save images with same proportions
+ - Measure size
+ - Count number of objets
+ - Clasify shapes
+ - Requires binary images (thresholded with black background)
 ```
+image= color.rgb2gray(image)
 ```
+
