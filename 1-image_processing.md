@@ -460,8 +460,9 @@ dots_contours = [cnt for cnt in contours if np.shape(cnt)[0] < max_dots_shape]
 # Shows all contours found 
 show_image_contour(binary, contours)
 ```
+# 4 Advanced operations,  detecting faces and features
 
-## Image Restoration and reconstruction
+## Finding the edges with canny
  - Measure size
  - Count number of objets
  - Clasify shapes
