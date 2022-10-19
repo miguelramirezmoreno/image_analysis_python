@@ -20,6 +20,14 @@ pdf_file = 'output.pdf'
 convert(dpcx_file, pdf_file)
 ```
 
+# Convert PDF to Tiff or any format (png, jpg, tiff, gif, bmp, docx)
+```
+pip install aspose-words
+import aspose.words as aw
+doc= aw.Document~("clcoding.pdf")
+doc.save("clcoding.tiff")
+```
+
 # Create gif with images (any type)
 ```
 import imageio
