@@ -501,6 +501,63 @@ plt.axis('off')
 plt.show()
 ```
 
+```
+# Find the peaks with a min distance of 10 pixels
+coords_w_min_10 = corner_peaks(measure_image, min_distance=10, threshold_rel=0.02)
+print("With a min_distance set to 10, we detect a total", len(coords_w_min_10), "corners in the image.")
+
+# Find the peaks with a min distance of 60 pixels
+coords_w_min_60 = corner_peaks(measure_image, min_distance=60, threshold_rel=0.02)
+print("With a min_distance set to 60, we detect a total", len(coords_w_min_60), "corners in the image.")
+
+# Show original and resulting image with corners detected
+show_image_with_corners(building_image, coords_w_min_10, "Corners detected with 10 px of min_distance")
+show_image_with_corners(building_image, coords_w_min_60, "Corners detected with 60 px of min_distance")
+```
+
+## Face detection
+ - Used in social media, filters, auto focus, blur for privacy protection, emotion recognition and things yet to come
+
+```
+from skimage.feature import Cascade
+##notice Cascade has cap letter!
+trained_file = data.lbp_frontal_face_cascade_filename()
+##data module of scikit image
+detector=Cascade(trained_file)
+detected= detector.detect_multi_scale(img=image, scale_Factor =1.2, step_ratio=1, min_size(10, 10), max_size(200, 200))
+##scale factor deals with the search window, the higher the values, the faster but worse the search will be. The min and max windows size specify the interval for the search windows.
+print(detected)
+```
+detected is a dictionary, r/c represents the position of the top left corner, then width and heigth
+
+```
+def show_detected_face (result, detected, title="Face image"):
+plt.imshow(result)
+imd_desc = plt.gca()
+plt.set_cmap('gray')
+plt.title(title)
+plt.axis('off')
+  
+  for patch in detected:
+      img_desc.add_patch(
+          patches.Rectangle(
+              (patch['c'], patch['r']),
+              patch['width'],
+              patch['height'],
+              fill=False, color='r', linewidth=2)
+      ) 
+      
+show_detected_face(image, detected)
+```
+
+## Finding the edges with canny
+ - Measure size
+ - Count number of objets
+ - Clasify shapes
+ - Requires binary images (thresholded with black background)
+```
+image= color.rgb2gray(image)
+```
 
 ## Finding the edges with canny
  - Measure size
