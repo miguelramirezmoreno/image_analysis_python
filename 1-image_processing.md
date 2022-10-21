@@ -463,6 +463,46 @@ show_image_contour(binary, contours)
 # 4 Advanced operations,  detecting faces and features
 
 ## Finding the edges with canny
+ - Using edges reduces size but retains information like shape.
+ - There are several filters like Sobel and Canny, considered the standard (based on gauss filtering)
+ - Requires grayscale image
+ 
+```
+from skimage.feature import canny
+coins= color.rgb2gray(coins)
+canny_edges= canny(coins)
+##We can also adjust gaussian filter to remove noise. The higher, the more filter.
+canny_edges_0_5 = canny(coins, sigma=0.5)
+```
+
+## Right around the corner
+ - Corner detection extracts information.
+ - Useful in motion detection, video tracking, 3d modeling and object recognition among others
+ - Points of interest are invariant to rotation, translation, intensity or scale changes. Corners and egdges are points of interest.
+ - A corner is the intersection of two edges, a junction of to contourns.
+ - We can use corner to match images on different escales, rotation, perspective...
+ - Harris corner detector is one of the most used methods, also requires grayscale.
+```
+from skimage.feature import corner_harris, corner_peaks
+image= rgb2gray(image)
+measure_image = corner_harris(image)
+##Find the coordinates of the corners. The min_distance is optional
+coords= corner_peaks(corner_harris(image), min_distance=5)
+print("A total of", len(coords), "corners were detected.")
+show_image_with_detected_corners(image, coords)
+```
+And the used function:
+```
+def show_image_with_corners(image, coords, title="Corners detected"):
+plt.imshow(image, interpolation='nearest', cmap= 'gray')
+plt.title(title)
+plt.plot(coords[:, 1], coords[:,0], '+r', markersize=15)
+plt.axis('off')
+plt.show()
+```
+
+
+## Finding the edges with canny
  - Measure size
  - Count number of objets
  - Clasify shapes
@@ -470,4 +510,3 @@ show_image_contour(binary, contours)
 ```
 image= color.rgb2gray(image)
 ```
-
